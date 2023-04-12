@@ -1,22 +1,25 @@
-package atomicspider.vxndo7z.projectmirrors.game;
+package atomicspider.vxndo7z.projectmirrors.game.engine;
 
-import android.view.*;
 import android.graphics.*;
+import android.view.*;
 
-public class MainThread
+public class GameThread
 extends Thread {
 
 	public static final double MAX_UPS = 60;
 	private static final double UPS_PERIOD = 1E+3 / MAX_UPS;
 	private boolean isRunning;
-	private Engine engine;
+	private OnUpdateListener onUpdateListener;
 	private SurfaceHolder holder;
 	private double averageUPS;
 	private double averageFPS;
 
-	public MainThread(Engine engine, SurfaceHolder holder) {
-		this.engine = engine;
+	public GameThread(SurfaceHolder holder) {
 		this.holder = holder;
+	}
+
+	public void setOnUpdateListener(OnUpdateListener listener) {
+		onUpdateListener = listener;
 	}
 
 	public Double getAverageFPS() {
@@ -35,25 +38,28 @@ extends Thread {
 	@Override
 	public void run() {
 		super.run();
-		
+
 		// Declare time and cycle count variables
 		int updateCount = 0;
 		int frameCount = 0;
 		long elapsedTime;
 		long sleepTime;
-		
+
 		// Game Loop
 		Canvas canvas = null;
 		long startTime = System.currentTimeMillis();
 		while (isRunning) {
-			
+
 			// Try to update and render game
 			try {
 				canvas = holder.lockCanvas();
 				synchronized (holder) {
-					engine.update();
-					updateCount++;
-					engine.draw(canvas);
+					if (onUpdateListener != null) {
+						onUpdateListener.update();
+					} updateCount++;
+					if (onUpdateListener != null) {
+						onUpdateListener.draw(canvas);
+					}
 				}
 			} catch (Exception e) {} finally {
 				if (canvas != null) {
@@ -63,7 +69,7 @@ extends Thread {
 					} catch (Exception e) {}
 				}
 			}
-			
+
 			// Pause Game Loop to not exceed target UPS
 			elapsedTime = System.currentTimeMillis() - startTime;
 			sleepTime = (long) (updateCount * UPS_PERIOD - elapsedTime);
@@ -72,15 +78,16 @@ extends Thread {
 					sleep(sleepTime);
 				} catch (Exception e) {}
 			}
-			
+
 			// Skip frames to keep up with UPS
 			while (sleepTime < 0 && updateCount < MAX_UPS - 1) {
-				engine.update();
-				updateCount++;
+				if (onUpdateListener != null) {
+					onUpdateListener.update();
+				} updateCount++;
 				elapsedTime = System.currentTimeMillis() - startTime;
 				sleepTime = (long) (updateCount * UPS_PERIOD - elapsedTime);
 			}
-			
+
 			// Calculate average UPS and FPS
 			elapsedTime = System.currentTimeMillis() - startTime;
 			if (elapsedTime >= 1000) {
@@ -91,5 +98,10 @@ extends Thread {
 				startTime = System.currentTimeMillis();
 			}
 		}
+	}
+
+	public static interface OnUpdateListener {
+		void draw(Canvas canvas);
+		void update();
 	}
 }

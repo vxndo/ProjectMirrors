@@ -1,8 +1,9 @@
-package atomicspider.vxndo7z.projectmirrors.game;
+package atomicspider.vxndo7z.projectmirrors.game.control;
 
 import android.graphics.*;
 
-public class Joystick {
+public class Joystick
+extends GameControl {
 
 	private int outerCircleCenterPositionX;
 	private int outerCircleCenterPositionY;
@@ -13,9 +14,6 @@ public class Joystick {
 	private Paint innerCirclePaint;
 	private Paint outerCirclePaint;
 	private double joystickCenterToTouchDistance;
-	private boolean isPressed;
-	private double actuatorX;
-	private double actuatorY;
 
 	public Joystick(int centerPositionX, int centerPositionY, int outerCircleRadius, int innerCircleRadius) {
 		outerCircleCenterPositionX = centerPositionX;
@@ -32,14 +30,7 @@ public class Joystick {
 		innerCirclePaint.setColor(Color.BLUE);
 	}
 
-	public boolean getIsPressed() {
-		return isPressed;
-	}
-
-	public void setIsPressed(boolean isPressed) {
-		this.isPressed = isPressed;
-	}
-
+	@Override
 	public boolean isPressed(double touchPositionX, double touchPositionY) {
 		joystickCenterToTouchDistance = Math.sqrt(
 			Math.pow(outerCircleCenterPositionX - touchPositionX, 2) +
@@ -48,16 +39,7 @@ public class Joystick {
 		return joystickCenterToTouchDistance < outerCircleRadius;
 	}
 
-	public void draw(Canvas canvas) {
-		canvas.drawCircle(outerCircleCenterPositionX, outerCircleCenterPositionY, outerCircleRadius, outerCirclePaint);
-		canvas.drawCircle(innerCircleCenterPositionX, innerCircleCenterPositionY, innerCircleRadius, innerCirclePaint);
-	}
-
-	public void resetActuator() {
-		actuatorX = 0;
-		actuatorY = 0;
-	}
-
+	@Override
 	public void setActuator(double touchPositionX, double touchPositionY) {
 		double deltaX = touchPositionX - outerCircleCenterPositionX;
 		double deltaY = touchPositionY - outerCircleCenterPositionY;
@@ -71,16 +53,15 @@ public class Joystick {
 		}
 	}
 
-	public double getActuatorX() {
-		return actuatorX;
-	}
-
-	public double getActuatorY() {
-		return actuatorY;
-	}
-
+	@Override
 	public void update() {
 		innerCircleCenterPositionX = (int) (outerCircleCenterPositionX + actuatorX * outerCircleRadius);
 		innerCircleCenterPositionY = (int) (outerCircleCenterPositionY + actuatorY * outerCircleRadius);
+	}
+
+	@Override
+	public void draw(Canvas canvas) {
+		canvas.drawCircle(outerCircleCenterPositionX, outerCircleCenterPositionY, outerCircleRadius, outerCirclePaint);
+		canvas.drawCircle(innerCircleCenterPositionX, innerCircleCenterPositionY, innerCircleRadius, innerCirclePaint);
 	}
 }

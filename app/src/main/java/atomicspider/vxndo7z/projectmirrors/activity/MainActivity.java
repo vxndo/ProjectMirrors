@@ -10,7 +10,7 @@ extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(new Game(this));
+		setContentView(new GameView(this));
 		setSystemUiFlags(4098);
 	}
 }

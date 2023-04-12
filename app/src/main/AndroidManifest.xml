@@ -7,6 +7,7 @@
 		android:allowBackup="true"
 		android:icon="@drawable/ic_launcher"
 		android:label="@string/app_name"
+		android:isGame="true"
 		android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
 		<activity
 			android:name=".activity.MainActivity"
@@ -19,5 +20,8 @@
 				<category android:name="android.intent.category.LAUNCHER"/>
 			</intent-filter>
 		</activity>
+		<activity
+			android:name="vxndo.lib.app.DebugActivity"
+			android:label="@string/app_name"/>
 	</application>
 </manifest>
