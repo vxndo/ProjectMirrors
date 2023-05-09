@@ -1,6 +1,6 @@
-package atomicspider.vxndo7z.projectmirrors;
+package com.github.vxndo7z.projectmirrors;
 
-import vxndo.lib.support.app.*;
+import vxndo.app.*;
 
 public class App
 extends Application {
