@@ -3,9 +3,10 @@ package com.github.vxndo7z.projectmirrors.gameobject;
 import android.graphics.*;
 import com.github.vxndo7z.projectmirrors.*;
 import com.github.vxndo7z.projectmirrors.graphics.*;
+import com.github.vxndo7z.projectmirrors.engine.*;
 
 public abstract class Circle
-extends GameObject {
+extends MirrorsObject {
 
 	protected double radius;
 	protected Paint paint;
@@ -25,7 +26,7 @@ extends GameObject {
 		else return false;
 	}
 
-	public void draw(Canvas canvas, GameDisplay gameDisplay) {
+	public void draw(Canvas canvas, MirrorsDisplay gameDisplay) {
 		canvas.drawCircle(
 			(float) gameDisplay.gameToDisplayCoordinatesX(positionX),
 			(float) gameDisplay.gameToDisplayCoordinatesY(positionY),

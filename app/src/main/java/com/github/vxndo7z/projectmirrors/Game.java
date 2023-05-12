@@ -2,14 +2,16 @@ package com.github.vxndo7z.projectmirrors;
 
 import android.content.*;
 import android.graphics.*;
+import android.util.*;
 import android.view.*;
-import java.util.*;
 import com.github.vxndo7z.projectmirrors.engine.*;
 import com.github.vxndo7z.projectmirrors.gameobject.*;
 import com.github.vxndo7z.projectmirrors.gamepanel.*;
 import com.github.vxndo7z.projectmirrors.graphics.*;
 import com.github.vxndo7z.projectmirrors.map.*;
-import android.util.*;
+import java.util.*;
+
+import com.github.vxndo7z.projectmirrors.engine.MirrorsDisplay;
 
 public class Game
 extends MirrorsEngine {
@@ -23,8 +25,9 @@ extends MirrorsEngine {
 	private int numberOfSpellsToCast = 0;
 	private GameOver gameOver;
 	private Performance performance;
-	private GameDisplay gameDisplay;
-
+	private MirrorsDisplay gameDisplay;
+	private String controllerPos = "";
+	
 	public Game(Context context) {
 		super(context);
 		SpriteSheet spriteSheet = new SpriteSheet(context);
@@ -32,7 +35,7 @@ extends MirrorsEngine {
 		DisplayMetrics metrics = getRealMetrics();
 		joystick = new Joystick(150, metrics.heightPixels-150, 70, 40);
 		player = new Player(joystick, 2 * 500, 500, 32, animator);
-		gameDisplay = new GameDisplay(metrics, player);
+		gameDisplay = new MirrorsDisplay(metrics, player);
 		performance = new Performance(this);
 		gameOver = new GameOver(gameDisplay);
 		tilemap = new Tilemap(this, spriteSheet);
@@ -44,12 +47,12 @@ extends MirrorsEngine {
 			case MotionEvent.ACTION_DOWN:
 			case MotionEvent.ACTION_POINTER_DOWN:
 				if (joystick.getIsPressed()) {
-					numberOfSpellsToCast ++;
+					numberOfSpellsToCast++;
 				} else if (joystick.isPressed((double) event.getX(), (double) event.getY())) {
 					joystickPointerId = event.getPointerId(event.getActionIndex());
 					joystick.setIsPressed(true);
 				} else {
-					numberOfSpellsToCast ++;
+					numberOfSpellsToCast++;
 				} return true;
 			case MotionEvent.ACTION_MOVE:
 				if (joystick.getIsPressed()) {
@@ -65,8 +68,33 @@ extends MirrorsEngine {
 	}
 
 	@Override
+	public boolean onGenericMotionEvent(MotionEvent event) {
+		if ((event.getSource() & InputDevice.SOURCE_JOYSTICK) == InputDevice.SOURCE_JOYSTICK) {
+			switch (event.getAction()) {
+				case MotionEvent.ACTION_MOVE:
+					joystick.setActuatorX(event.getAxisValue(event.AXIS_X));
+					joystick.setActuatorY(event.getAxisValue(event.AXIS_Y));
+					return true;
+			}
+		}
+		return super.onGenericMotionEvent(event);
+	}
+
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if ((event.getSource() & InputDevice.SOURCE_GAMEPAD) == InputDevice.SOURCE_GAMEPAD) {
+			switch (event.getKeyCode()) {
+				case event.KEYCODE_BUTTON_R2:
+					numberOfSpellsToCast++;
+					return true;
+			}
+		} return super.onKeyDown(keyCode, event);
+	}
+	
+	@Override
 	public void draw(Canvas canvas) {
 		super.draw(canvas);
+		canvas.drawColor(0xff000000);
 		tilemap.draw(canvas, gameDisplay);
 		player.draw(canvas, gameDisplay);
 		for (Enemy enemy : enemyList) {
@@ -75,6 +103,7 @@ extends MirrorsEngine {
 			spell.draw(canvas, gameDisplay);
 		} joystick.draw(canvas);
 		performance.draw(canvas);
+		performance.drawText(controllerPos, canvas, 140);
 		if (player.getHealthPoint() <= 0) {
 			gameOver.draw(canvas);
 		}

@@ -19,17 +19,13 @@ public class Performance {
 	}
 
 	public void draw(Canvas canvas) {
-		drawUPS(canvas);
-		drawFPS(canvas);
-	}
-
-	public void drawUPS(Canvas canvas) {
+		String averageFPS = Integer.toString((int)gameLoop.getAverageFPS());
 		String averageUPS = Integer.toString((int)gameLoop.getAverageUPS());
 		canvas.drawText("UPS: " + averageUPS, 20, 60, paint);
-	}
-
-	public void drawFPS(Canvas canvas) {
-		String averageFPS = Integer.toString((int)gameLoop.getAverageFPS());
 		canvas.drawText("FPS: " + averageFPS, 20, 100, paint);
+	}
+	
+	public void drawText(String text, Canvas canvas, int y) {
+		canvas.drawText(text, 20, y, paint);
 	}
 }

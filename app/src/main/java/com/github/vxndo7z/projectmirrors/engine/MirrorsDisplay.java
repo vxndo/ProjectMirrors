@@ -1,15 +1,15 @@
-package com.github.vxndo7z.projectmirrors;
+package com.github.vxndo7z.projectmirrors.engine;
 
 import android.graphics.*;
-import com.github.vxndo7z.projectmirrors.gameobject.*;
 import android.util.*;
+import com.github.vxndo7z.projectmirrors.gameobject.*;
 
-public class GameDisplay {
-	
+public class MirrorsDisplay {
+
 	public final Rect DISPLAY_RECT;
 	private final int widthPixels;
 	private final int heightPixels;
-	private final GameObject centerObject;
+	private final MirrorsObject centerObject;
 	private final double displayCenterX;
 	private final double displayCenterY;
 	private double gameToDisplayCoordinatesOffsetX;
@@ -17,7 +17,7 @@ public class GameDisplay {
 	private double gameCenterX;
 	private double gameCenterY;
 
-	public GameDisplay(DisplayMetrics metrics, GameObject centerObject) {
+	public MirrorsDisplay(DisplayMetrics metrics, MirrorsObject centerObject) {
 		this.widthPixels = metrics.widthPixels;
 		this.heightPixels = metrics.heightPixels;
 		DISPLAY_RECT = new Rect(0, 0, widthPixels, heightPixels);

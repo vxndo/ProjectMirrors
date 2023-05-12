@@ -1,7 +1,7 @@
 package com.github.vxndo7z.projectmirrors.gamepanel;
 
 import android.graphics.*;
-import com.github.vxndo7z.projectmirrors.*;
+import com.github.vxndo7z.projectmirrors.engine.*;
 import com.github.vxndo7z.projectmirrors.gameobject.*;
 import com.github.vxndo7z.projectmirrors.graphics.*;
 
@@ -24,7 +24,7 @@ public class HealthBar {
 		healthPaint.setColor(healthColor);
 	}
 
-	public void draw(Canvas canvas, GameDisplay gameDisplay) {
+	public void draw(Canvas canvas, MirrorsDisplay gameDisplay) {
 		float x = (float) player.getPositionX();
 		float y = (float) player.getPositionY();
 		float distanceToPlayer = 30;

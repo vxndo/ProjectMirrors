@@ -11,8 +11,8 @@ public abstract class MirrorsEngine
 extends SurfaceView
 implements SurfaceHolder.Callback {
 
-	public static final double MAX_UPS = 60.0;
-	private static final double UPS_PERIOD = 1E+3 / MAX_UPS;
+	public static double MAX_UPS;
+	private static double UPS_PERIOD;
 	private boolean mIsRunning;
 	private double mAverageUPS;
 	private double mAverageFPS;
@@ -26,7 +26,13 @@ implements SurfaceHolder.Callback {
 		mHolder.addCallback(this);
 		mThread = new MainThread();
 		mDisplay = ((Activity) getContext()).getDisplay();
+		setMaxUps(mDisplay.getRefreshRate());
 		setFocusable(true);
+	}
+
+	public void setMaxUps(double maxUps) {
+		MAX_UPS = maxUps;
+		UPS_PERIOD = 1E+3 / MAX_UPS;
 	}
 
 	@Override

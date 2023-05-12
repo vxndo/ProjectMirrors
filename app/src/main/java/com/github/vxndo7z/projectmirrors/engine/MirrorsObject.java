@@ -1,20 +1,28 @@
-package com.github.vxndo7z.projectmirrors.gameobject;
+package com.github.vxndo7z.projectmirrors.engine;
 
 import android.graphics.*;
-import com.github.vxndo7z.projectmirrors.*;
+import com.github.vxndo7z.projectmirrors.engine.*;
 
-public abstract class GameObject {
+public abstract class MirrorsObject {
 
 	protected double positionX, positionY;
 	protected double velocityX, velocityY;
 	protected double directionX = 1;
 	protected double directionY;
 
-	public GameObject() {}
+	public MirrorsObject() {}
 
-	public GameObject(double positionX, double positionY) {
+	public MirrorsObject(double positionX, double positionY) {
 		this.positionX = positionX;
 		this.positionY = positionY;
+	}
+
+	public double getVelocityX() {
+		return velocityX;
+	}
+
+	public double getVelocityY() {
+		return velocityY;
 	}
 
 	public double getPositionX() {
@@ -33,10 +41,10 @@ public abstract class GameObject {
 		return directionY;
 	}
 
-	public abstract void draw(Canvas canvas, GameDisplay gameDisplay);
+	public abstract void draw(Canvas canvas, MirrorsDisplay gameDisplay);
 	public abstract void update();
 
-	public double getDistanceBetweenObjects(GameObject obj2) {
+	public double getDistanceBetweenObjects(MirrorsObject obj2) {
 		return Math.sqrt(
 			Math.pow(obj2.getPositionX() - getPositionX(), 2) +
 			Math.pow(obj2.getPositionY() - getPositionY(), 2)

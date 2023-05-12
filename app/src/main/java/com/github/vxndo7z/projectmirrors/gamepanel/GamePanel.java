@@ -2,13 +2,13 @@ package com.github.vxndo7z.projectmirrors.gamepanel;
 
 import android.graphics.*;
 import android.view.*;
-import com.github.vxndo7z.projectmirrors.*;
+import com.github.vxndo7z.projectmirrors.engine.MirrorsDisplay;
 
 public abstract class GamePanel {
 
-	private GameDisplay display;
+	private MirrorsDisplay display;
 
-	public GamePanel(GameDisplay display) {
+	public GamePanel(MirrorsDisplay display) {
 		this.display = display;
 	}
 
@@ -20,14 +20,5 @@ public abstract class GamePanel {
 		return display.DISPLAY_RECT.height();
 	}
 
-	public boolean onTouchEvent(MotionEvent event) {
-		switch (event.getActionMasked()) {
-			case event.ACTION_DOWN:
-				onClick();
-				return true;
-		} return false;
-	}
-
-	public abstract void onClick();
 	public abstract void draw(Canvas canvas);
 }

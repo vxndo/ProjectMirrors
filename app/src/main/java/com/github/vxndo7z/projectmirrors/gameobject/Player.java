@@ -2,6 +2,7 @@ package com.github.vxndo7z.projectmirrors.gameobject;
 
 import android.graphics.*;
 import com.github.vxndo7z.projectmirrors.*;
+import com.github.vxndo7z.projectmirrors.engine.*;
 import com.github.vxndo7z.projectmirrors.gamepanel.*;
 import com.github.vxndo7z.projectmirrors.graphics.*;
 
@@ -37,7 +38,7 @@ extends Circle {
 		} playerState.update();
 	}
 
-	public void draw(Canvas canvas, GameDisplay gameDisplay) {
+	public void draw(Canvas canvas, MirrorsDisplay gameDisplay) {
 		animator.draw(canvas, gameDisplay, this);
 		healthBar.draw(canvas, gameDisplay);
 	}

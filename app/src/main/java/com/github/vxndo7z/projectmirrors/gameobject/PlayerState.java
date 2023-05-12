@@ -23,15 +23,15 @@ public class PlayerState {
 	public void update() {
 		switch (state) {
 			case NOT_MOVING:
-				if (player.velocityX != 0 || player.velocityY != 0)
+				if (player.getVelocityX() != 0 || player.getVelocityY() != 0)
 					state = State.STARED_MOVING;
 				break;
 			case STARED_MOVING:
-				if (player.velocityX != 0 || player.velocityY != 0)
+				if (player.getVelocityX() != 0 || player.getVelocityY() != 0)
 					state = State.IS_MOVING;
 				break;
 			case IS_MOVING:
-				if (player.velocityX == 0 && player.velocityY == 0)
+				if (player.getVelocityX() == 0 && player.getVelocityY() == 0)
 					state = State.NOT_MOVING;
 				break;
 			default:

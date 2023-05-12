@@ -49,10 +49,6 @@ public class Joystick {
 	}
 
 	public void update() {
-		updateInnerCirclePosition();
-	}
-
-	private void updateInnerCirclePosition() {
 		innerCircleCenterPositionX = (int) (outerCircleCenterPositionX + actuatorX * outerCircleRadius);
 		innerCircleCenterPositionY = (int) (outerCircleCenterPositionY + actuatorY * outerCircleRadius);
 	}
@@ -85,7 +81,15 @@ public class Joystick {
 	public void setIsPressed(boolean isPressed) {
 		this.isPressed = isPressed;
 	}
+	
+	public void setActuatorX(double actuatorX) {
+		this.actuatorX = actuatorX;
+	}
 
+	public void setActuatorY(double actuatorY) {
+		this.actuatorY = actuatorY;
+	}
+	
 	public double getActuatorX() {
 		return actuatorX;
 	}

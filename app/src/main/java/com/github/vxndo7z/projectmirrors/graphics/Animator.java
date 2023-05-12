@@ -3,6 +3,7 @@ package com.github.vxndo7z.projectmirrors.graphics;
 import android.graphics.*;
 import com.github.vxndo7z.projectmirrors.*;
 import com.github.vxndo7z.projectmirrors.gameobject.*;
+import com.github.vxndo7z.projectmirrors.engine.*;
 
 public class Animator {
 
@@ -16,7 +17,7 @@ public class Animator {
 		this.playerSpriteArray = playerSpriteArray;
 	}
 
-	public void draw(Canvas canvas, GameDisplay gameDisplay, Player player) {
+	public void draw(Canvas canvas, MirrorsDisplay gameDisplay, Player player) {
 		switch (player.getPlayerState().getState()) {
 			case NOT_MOVING:
 				drawFrame(canvas, gameDisplay, player, playerSpriteArray[idxNotMovingFrame]);
@@ -43,7 +44,7 @@ public class Animator {
 		else idxMovingFrame = 1;
 	}
 
-	public void drawFrame(Canvas canvas, GameDisplay gameDisplay, Player player, Sprite sprite) {
+	public void drawFrame(Canvas canvas, MirrorsDisplay gameDisplay, Player player, Sprite sprite) {
 		sprite.draw(
 			canvas,
 			(int) gameDisplay.gameToDisplayCoordinatesX(player.getPositionX()) - sprite.getWidth() / 2,

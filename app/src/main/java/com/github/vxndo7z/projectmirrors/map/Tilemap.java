@@ -1,8 +1,8 @@
 package com.github.vxndo7z.projectmirrors.map;
 
-import android.content.*;
 import android.graphics.*;
 import com.github.vxndo7z.projectmirrors.*;
+import com.github.vxndo7z.projectmirrors.engine.*;
 import com.github.vxndo7z.projectmirrors.graphics.*;
 
 import static com.github.vxndo7z.projectmirrors.map.MapLayout.NUMBER_OF_COLUMN_TILES;
@@ -57,7 +57,7 @@ public class Tilemap {
 		);
 	}
 
-	public void draw(Canvas canvas, GameDisplay gameDisplay) {
+	public void draw(Canvas canvas, MirrorsDisplay gameDisplay) {
 		canvas.drawBitmap(
 			mapBitmap,
 			gameDisplay.getGameRect(),
